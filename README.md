@@ -5,12 +5,11 @@ On the Influencer Side you will host the events
 On the User side it will show a feed of the users tiktok followings, listing their events etc
 
 ## Tentative Layout
-
-![[Drawing 2024-08-16 21.01.23.excalidraw|800]]
+![image](https://github.com/user-attachments/assets/cb6901e9-0580-45f2-a287-95d8bd8b5d73)
 
 ## UI Wireframe
 
-![[Live Event Manager 2024-08-16 22.19.40.excalidraw|800]]
+![image](https://github.com/user-attachments/assets/43152015-b7f9-458d-8f94-a61679fbee56)
 *Optional:*
 
 - Use tiktok to login
