@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html>
+   <head>
+      <title>Live Auctions Manager</title>
+      <link rel="stylesheet" href="static/styles.css">
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+ <script src="https://unpkg.com/htmx.org@1.8.4"></script> <!-- HTMX -->
+   </head>
+   <body>
+      <header class="top-bar">
+         <div class="logo">
+            <span><strong>Live Shops</strong></span>
+         </div>
+         <div class="menu-icon">
+   <i class="fas fa-bell" id="bell-icon"></i>
+   <div class="notification-popup" id="notification-popup">
+      <h2>Recent Purchases</h2>
+      <ul id="purchase-list">
+         <!-- List of recent purchases will be displayed here -->
+      </ul>
+   </div>
+</div>
+      </header>
+      <div class="dashboard">
+    <div class="dashboard-item">
+        <h3>Total Earned</h3>
+        <p>$0.00</p>
+    </div>
+    <div class="dashboard-item">
+        <h3>Items Sold</h3>
+        <p>0</p>
+    </div>
+</div>
+
+    <section id="live-events">
+    <h2 class="heading">Live Events <span class="dot"></span></h2>
+    <div class="events-container">
+        <div class="events-wrapper">
+            {{range .LiveEvents}}
+             <!-- <a href="static/event_page.html{{.ID}}">  -->
+<a href="/event/{{.ID}}">
+              <section class="event-card" style="background-image: url('{{.ImageURL}}');">
+                    <!-- Add an image or other content here -->
+                    <h3>{{.Title}}</h3>
+                    <!-- You can add other event details here if needed -->
+                </section>
+            </a>
+            {{end}}
+        </div>
+    </div>
+</section>
+    <section id="upcoming-events">
+        <h2 class="heading">Upcoming Events <span class="red-dot"></span></h2>
+        <div class="events-container">
+            <div class="events-wrapper">
+                {{range .UpcomingEvents}}
+
+              <section class="event-card" style="background-image: url('{{.ImageURL}}');">
+                    <!-- Add an image or other content here -->
+                    <h3>{{.Title}}</h3>
+                    <p>Start Date: {{.StartDate.Format "01/02/2006"}}</p>
+                </section>
+                {{end}}
+            </div>
+        </div>
+    </section>
+ 
+      <nav class="bottom-navbar">
+         <a href="/index.html">
+         <i class="fas fa-home"></i>
+         <span>Home</span>
+         </a>
+         <a href="#">
+         <i class="fas fa-search"></i>
+         <span>Search</span>
+         </a>
+        <a href="#" id="add-button">
+            <i class="fas fa-plus-square"></i>
+            <span></span>
+        </a>
+         <a href="#">
+         <i class="fas fa-heart"></i>
+         <span>Favourite</span>
+         </a>
+         <a href="#">
+         <i class="fas fa-user"></i>
+         <span>Profile</span>
+         </a>
+       <div id="popup" class="popup hidden">
+            <ul>
+                <li><a href="#" id="add-product">Add Product</a></li>
+                <li><a href="#" id="create-event">Create Event</a></li>
+            </ul>
+        </div>
+    </nav>
+ <!-- Form popup -->
+    <div id="form-popup-product" class="form-popup hidden">
+        <form action="/add-product" method="post" enctype="multipart/form-data">
+            <label for="name">Name:</label>
+            <input type="text" id="name" name="name" required><br>
+            
+            <label for="price">Price:</label>
+            <input type="number" step="0.01" id="price" name="price" required><br>
+            
+            <label for="category">Category:</label>
+            <input type="text" id="category" name="category" required><br>
+            
+            <label for="image">Image:</label>
+            <input type="file" id="image" name="image" accept="image/*"><br>
+            
+            <input type="submit" value="Add Product">
+        </form>
+    </div>
+<!-- Form popup for Create Event -->
+
+<div id="form-popup-event" class="form-popup hidden">
+    <form action="/add-event" method="post" enctype="multipart/form-data">
+        <label for="title">Title:</label>
+        <input type="text" id="title" name="title" required><br>
+        
+        <label for="start_date">Start Date (MM/DD/YYYY):</label>
+        <input type="text" id="start_date" name="start_date" required><br>
+        
+        <label for="duration">Duration (hours):</label>
+        <input type="text" id="duration" name="duration" required><br>
+        
+        <label for="products">Products:</label>
+        <select id="products" name="products" multiple>
+            {{range .Products}}
+            <option value="{{.ID}}">{{.Name}} - ${{.Price}}</option>
+            {{end}}
+        </select><br>
+        
+        <label for="image">Event Image:</label>
+        <input type="file" id="image" name="image" accept="image/*"><br>
+        
+        <input type="submit" value="Add Event">
+    </form>
+</div>
+
+   </body>
+
+<script>
+    // Toggle the Add Product form popup
+    document.getElementById('add-button').addEventListener('click', function(event) {
+        event.preventDefault(); // Prevent default link behavior
+        var popup = document.getElementById('popup');
+        popup.classList.toggle('hidden');
+    });
+document.getElementById('add-product').addEventListener('click', function(event) {
+    event.preventDefault(); // Prevent default link behavior
+    var formPopup = document.getElementById('form-popup-product');
+    formPopup.classList.remove('hidden');
+    document.getElementById('popup').classList.add('hidden'); // Hide the main popup
+});
+    // Toggle the Create Event form popup
+    document.getElementById('create-event').addEventListener('click', function(event) {
+        event.preventDefault(); // Prevent default link behavior
+        var popupEvent = document.getElementById('form-popup-event');
+        popupEvent.classList.toggle('hidden');
+    });
+
+    // Close the popups if clicked outside
+document.addEventListener('click', function(event) {
+    var popup = document.getElementById('popup');
+    var formPopupEvent = document.getElementById('form-popup-event');
+    var formPopupProduct = document.getElementById('form-popup-product');
+    var addButton = document.getElementById('add-button');
+    var addProductButton = document.getElementById('add-product');
+    var createEventButton = document.getElementById('create-event');
+    
+    // Close main popup if clicked outside
+    if (!popup.contains(event.target) && !addButton.contains(event.target) && !addProductButton.contains(event.target) && !createEventButton.contains(event.target)) {
+        popup.classList.add('hidden');
+    }
+    // Close product form popup if clicked outside
+    if (!formPopupProduct.contains(event.target) && !addProductButton.contains(event.target)) {
+        formPopupProduct.classList.add('hidden');
+    }
+    // Close event form popup if clicked outside
+    if (!formPopupEvent.contains(event.target) && !createEventButton.contains(event.target)) {
+        formPopupEvent.classList.add('hidden');
+    }
+    });
+document.getElementById('products').addEventListener('click', function(event) {
+  event.stopPropagation();
+  this.focus();
+});
+// Update the dashboard data every second
+setInterval(() => {
+    fetch('/dashboard-data')
+        .then(response => response.json())
+        .then(data => {
+            document.querySelector('.dashboard-item:nth-child(1) p').innerText = `$${data.total_earned.toFixed(2)}`;
+            document.querySelector('.dashboard-item:nth-child(2) p').innerText = data.items_sold;
+        });
+}, 1000);
+document.getElementById('bell-icon').addEventListener('click', function() {
+   var notificationPopup = document.getElementById('notification-popup');
+   notificationPopup.style.display = 'block';
+
+   // Get the list of recent purchases from the server
+   fetch('/recent-purchases')
+      .then(response => response.json())
+      .then(data => {
+         var purchaseList = document.getElementById('purchase-list');
+         purchaseList.innerHTML = '';
+
+         data.forEach(purchase => {
+            var li = document.createElement('li');
+            var date = new Date(purchase.PurchaseDate);
+            var formattedDate = date.toLocaleDateString() + ' ' + date.toLocaleTimeString();
+            li.textContent = `User ${purchase.UserID} purchased ${purchase.Quantity} x ${purchase.Product.Name} on ${formattedDate}`;
+            purchaseList.appendChild(li);
+         });
+      });
+});
+// Close the popup when clicked outside
+document.addEventListener('click', function(event) {
+   var notificationPopup = document.getElementById('notification-popup');
+   if (!notificationPopup.contains(event.target) && event.target.id !== 'bell-icon') {
+      notificationPopup.style.display = 'none';
+   }
+});
+</script>
+</html>

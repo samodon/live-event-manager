@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Live Auctions Manager</title>
+    <link rel="stylesheet" href="/static/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <header class="top-bar">
+        <div class="logo">
+            <span><strong>Live Shops</strong></span>
+        </div>
+        <div class="menu-icon">
+            <i class="fas fa-bars"></i>
+        </div>
+    </header>
+<div class="live-indicator">
+    <p><strong>Action Ends in {{.RemainingTime}}, HURRY UP!</strong></p>
+</div>
+{{if .Event}}
+    <div class="product-grid">
+        {{range .Event.Products}}
+            <div class="product-container">
+                <div class="product-card" style="background-image: url('{{.ImageURL}}');">
+                    <h3>{{.Name}}</h3>
+                </div>
+                <div class="product-info">
+                    <p> ${{printf "%.2f" .Price}}</p>
+                </div>
+            </div>
+        {{end}}
+    </div>
+{{else}}
+    <p>No products available for this event.</p>
+{{end}}
+   <nav class="bottom-navbar">
+
+         <a href="/index.html">
+            <i class="fas fa-home"></i>
+            <span>Home</span>
+        </a>
+        <a href="#">
+            <i class="fas fa-search"></i>
+            <span>Search</span>
+        </a>
+        <a href="#" id="add-button">
+            <i class="fas fa-plus-square"></i>
+            <span></span>
+        </a>
+        <a href="#">
+            <i class="fas fa-heart"></i>
+            <span>Favourite</span>
+        </a>
+        <a href="#">
+            <i class="fas fa-user"></i>
+            <span>Profile</span>
+        </a>
+        <div id="popup" class="popup hidden">
+            <ul>
+                <li><a href="#" id="add-product">Add Product</a></li>
+                <li><a href="#" id="create-event">Create Event</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Form popups -->
+    <div id="form-popup-product" class="form-popup hidden">
+        <form action="/add-product" method="post" enctype="multipart/form-data">
+            <label for="name">Name:</label>
+            <input type="text" id="name" name="name" required><br>
+            
+            <label for="price">Price:</label>
+            <input type="number" step="0.01" id="price" name="price" required><br>
+            
+            <label for="category">Category:</label>
+            <input type="text" id="category" name="category" required><br>
+            
+            <label for="image">Image:</label>
+            <input type="file" id="image" name="image" accept="image/*"><br>
+            
+            <input type="submit" value="Add Product">
+        </form>
+    </div>
+
+    <div id="form-popup-event" class="form-popup hidden">
+        <form action="/add-event" method="post" enctype="multipart/form-data">
+            <label for="title">Title:</label>
+            <input type="text" id="title" name="title" required><br>
+            
+            <label for="start_date">Start Date (MM/DD/YYYY):</label>
+            <input type="text" id="start_date" name="start_date" required><br>
+            
+            <label for="duration">Duration (hours):</label>
+            <input type="text" id="duration" name="duration" required><br>
+            
+            <label for="products">Products:</label>
+            <select id="products" name="products" multiple>
+                {{range .Products}}
+                <option value="{{.ID}}">{{.Name}} - ${{.Price}}</option>
+                {{end}}
+            </select><br>
+            
+            <label for="image">Event Image:</label>
+            <input type="file" id="image" name="image" accept="image/*"><br>
+            
+            <input type="submit" value="Add Event">
+        </form>
+    </div>
+
+    <script>
+        // Toggle the Add Product form popup
+        document.getElementById('add-button').addEventListener('click', function(event) {
+            event.preventDefault(); // Prevent default link behavior
+            var popup = document.getElementById('popup');
+            popup.classList.toggle('hidden');
+        });
+
+        document.getElementById('add-product').addEventListener('click', function(event) {
+            event.preventDefault(); // Prevent default link behavior
+            var formPopup = document.getElementById('form-popup-product');
+            formPopup.classList.remove('hidden');
+            document.getElementById('popup').classList.add('hidden'); // Hide the main popup
+        });
+
+        // Toggle the Create Event form popup
+        document.getElementById('create-event').addEventListener('click', function(event) {
+            event.preventDefault(); // Prevent default link behavior
+            var popupEvent = document.getElementById('form-popup-event');
+            popupEvent.classList.toggle('hidden');
+        });
+
+        // Close the popups if clicked outside
+        document.addEventListener('click', function(event) {
+            var popup = document.getElementById('popup');
+            var formPopupEvent = document.getElementById('form-popup-event');
+            var formPopupProduct = document.getElementById('form-popup-product');
+            var addButton = document.getElementById('add-button');
+            var addProductButton = document.getElementById('add-product');
+            var createEventButton = document.getElementById('create-event');
+            
+            // Close main popup if clicked outside
+            if (!popup.contains(event.target) && !addButton.contains(event.target) && !addProductButton.contains(event.target) && !createEventButton.contains(event.target)) {
+                popup.classList.add('hidden');
+            }
+            // Close product form popup if clicked outside
+            if (!formPopupProduct.contains(event.target) && !addProductButton.contains(event.target)) {
+                formPopupProduct.classList.add('hidden');
+            }
+            // Close event form popup if clicked outside
+            if (!formPopupEvent.contains(event.target) && !createEventButton.contains(event.target)) {
+                formPopupEvent.classList.add('hidden');
+            }
+        });
+    </script>
+</body>
+</html>

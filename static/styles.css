@@ -1,0 +1,429 @@
+/* Reset default styles */
+body, html {
+    margin: 0;
+    padding: 0;
+    font-family: JetBrainsMono Nerd Font;
+}
+
+.top-bar strong{
+  color: #191724;
+  font-style: oblique;
+}
+/* Style the bottom navbar */
+.bottom-navbar {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: #fff;
+    border-top: 1px solid #ccc;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    height: 150px;
+    padding: 0 20px;
+    box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Style the navbar links */
+.bottom-navbar a {
+    text-align: center;
+    color: #333;
+    text-decoration: none;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* Style the navbar icons */
+
+.bottom-navbar i {
+    font-size: 75px;
+    margin-bottom: 5px; 
+    color: transparent;
+    -webkit-text-stroke: 2px #000; 
+}
+
+
+/* Style the navbar text */
+.bottom-navbar span {
+    font-size: 25px;
+}
+
+
+.bottom-navbar a.active {
+    color: #f00;
+}
+
+.top-bar span{
+  font-size: 70px;
+}
+
+/* Style the top bar */
+.top-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    padding: 10px 20px;
+    /* box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); */
+}
+
+/* Style the logo */
+.top-bar .logo img {
+    height: 40px; 
+}
+
+/* Style the hamburger menu icon */
+.top-bar .menu-icon i {
+    font-size: 75px;
+    cursor: pointer;
+}
+
+/* Style each dashboard item */
+.dashboard-item {
+    flex: 1;
+    text-align: center;
+}
+
+.dashboard-item h3 {
+    margin: 0 0 10px;
+    font-style: oblique;
+    color: #333;
+  font-size: 40px;
+}
+
+.dashboard-item p {
+    font-size: 35px;
+    margin: 0;
+    color: #ea9d34;
+}
+.dashboard {
+    margin: 20px;
+    padding: 20px;
+  color: #000000;
+    background-color: #b4637a;
+    border-radius: 20px;
+     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); 
+    display: flex;
+    justify-content: space-between;
+}
+
+.live-indicator{
+    margin: 20px;
+    padding: 20px;
+background-color: rgba(180, 99, 122, 0.5);
+  /* opacity: 0.6; */
+  border-color: red;
+  border-width: 2px;
+  border-style: solid;
+    border-radius: 20px;
+     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); 
+    display: flex;
+    justify-content: space-between;
+}
+.live-indicator p{
+  font-size: 30px;
+  opacity: 100%;
+  color: black;
+}
+.heading .dot {
+    position: absolute;
+    top: 50%;
+    right: -70px;
+    width: 30px;
+    height: 30px;
+    background-color: red;
+    border-radius: 50%;
+    transform: translateY(-50%);
+}
+/* Style the events container */
+.events-container {
+    overflow-x: auto;
+    white-space: nowrap;
+    padding: 20px 0;
+    margin: 1rem;
+    border-radius: 20px;
+    background-color: #f9f9f9;
+}
+
+/* Style the events wrapper */
+.events-wrapper {
+    display: flex;
+    flex-wrap: nowrap;
+    gap: 20px; 
+}
+.event-card {
+    background-size: cover; 
+    background-position: center;
+    border-radius: 20px; 
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); 
+    padding: 20px;
+    min-width: 400px; 
+    margin: 1rem;
+    height: 400px;
+    text-align: center;
+    color: #fff;
+    position: relative;
+}
+.event-card h3 {
+    position: absolute;
+    bottom: 20px; 
+    left: 20px;
+    background-color: rgba(0, 0, 0, 0.5);
+    padding: 10px;
+    border-radius: 4px;
+}
+
+.heading{
+  font-size: 40px;
+  padding: 10px;
+    position: relative;
+    display: inline-block;
+    color: #333;
+}
+/* .event-card h3 { */
+/*     margin: 0 0 10px; */
+/*     font-size: 30px; */
+/*     color: #333; */
+/* } */
+
+.event-card p {
+    margin: 5px 0;
+    color: #666;
+}
+/* Style the popup */
+.popup {
+    position: absolute;
+    bottom: 150px; /* Adjust to be above the navbar */
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 10px;
+    z-index: 1000;
+}
+
+/* Hide the popup by default */
+.hidden {
+    display: none;
+}
+
+/* Style the popup list */
+.popup ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.popup li {
+    margin: 10px 0;
+}
+
+.popup a {
+    text-decoration: none;
+    color: #333;
+    font-size: 50px;
+}
+
+.popup a:hover {
+    color: #007bff;
+}
+/* Style the form popup */
+.form-popup {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    padding: 20px;
+    z-index: 1001;
+    max-width: 90%;
+    max-height: 90vh;
+    overflow-y: auto;
+}
+
+/* Style form elements */
+form {
+    display: flex;
+    flex-direction: column;
+}
+
+form label {
+    margin-top: 10px;
+}
+
+form input {
+    margin-top: 5px;
+    padding: 4px; 
+    font-size: 30px; 
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+form input[type="submit"] {
+    margin-top: 20px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    padding: 10px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+form input[type="submit"]:hover {
+    background-color: #0056b3;
+}
+
+/* Style the event form popup */
+.event-form-popup {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    margin: 2rem;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); 
+    padding: 20px;
+    z-index: 1001;
+    max-width: 90%;
+    max-height: 90vh;
+    overflow-y: auto;
+}
+
+/* Style event form elements */
+.event-form {
+    display: flex;
+    flex-direction: column;
+}
+
+.event-form label {
+    margin-top: 10px;
+}
+
+.event-form input {
+    margin: 5px;
+    padding: 4px; 
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.event-form input[type="submit"] {
+    margin: 20px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    padding: 10px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.event-form input[type="submit"]:hover {
+    background-color: #0056b3;
+}
+
+/* Media query for smaller screens */
+@media (max-width: 768px) {
+    form input {
+        font-size: 14px;
+        padding: 2px;
+    }
+
+    .event-form input {
+        font-size: 14px;
+        padding: 2px;
+    }
+}/* Container for the grid */
+.product-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    justify-content: center;
+}
+
+.product-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* Style for each product card */
+.product-card {
+    background-size: cover; 
+    background-position: center; 
+    border-radius: 20px; 
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 20px; 
+    width: 300px;
+    height: 300px; 
+    text-align: center; 
+    color: #fff;
+    position: relative; 
+}
+
+/* Style for product name inside the card */
+.product-card h3 {
+    position: absolute;
+    bottom: 20px;
+    left: 20px;
+    right: 20px;
+    background-color: rgba(0, 0, 0, 0.5);
+    padding: 10px;
+    border-radius: 4px;
+    margin: 0; 
+    font-size: 30px;
+}
+
+
+.product-info {
+    text-align: center;
+    width: 300px; 
+    /* padding: 20px; */
+    color: #333;
+}
+
+.product-info p {
+    margin-bottom: 10px;
+    font-size: 40px;
+  font-weight: bold;
+}
+.notification-popup {
+   position: fixed;
+   top: 50%;
+   left: 50%;
+  max-height: 800px; 
+  overflow-y: auto; 
+   transform: translate(-50%, -50%);
+   background-color: #fff;
+   border-radius: 20px;
+   padding: 20px;
+  z-index: 10000;
+   display: none;
+   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+   width: 800px;
+}
+
+.notification-popup ul {
+   list-style: none;
+   padding: 0;
+   margin: 0;
+}
+
+.notification-popup li {
+   padding: 10px;
+  font-size: 40px;
+   border-bottom: 1px solid #ccc;
+}
+
+.notification-popup li:last-child {
+   border-bottom: none;
+}
+
